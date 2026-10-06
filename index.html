@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rodrigo Silva | Bayesian calibration and uncertainty quantification for physics-based models</title>
-<meta name="description" content="Portfolio of Rodrigo Silva: Bayesian calibration, uncertainty quantification and efficient simulation of physical systems. Four projects from MSc and PhD research.">
+<meta name="description" content="Portfolio of Rodrigo Silva: Bayesian calibration, uncertainty quantification and efficient simulation of physical systems. Three projects from PhD and MSc research.">
 <style>
 :root {
   --bg: #F4F6F8;
@@ -133,16 +133,32 @@ sub, sup { line-height: 0; }
 
 .footer { border-top: 1px solid var(--rule); padding: 32px 0 56px; font-family: var(--sans); font-size: 0.85rem; color: var(--muted); }
 .footer p { margin: 0 0 0.4em; }
+
+/* Equations (cropped from the thesis and paper, shown on a light panel) */
+.eq { margin: 1.2em 0; }
+.eqpanel { background: #fff; border: 1px solid var(--rule); padding: 16px 20px; overflow-x: auto; }
+.eqpanel img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.eqpanel img + img { margin-top: 18px; }
+.eq figcaption { font-family: var(--sans); font-size: 0.82rem; line-height: 1.5; color: var(--muted); margin-top: 8px; }
+
+/* Data table */
+.datawrap { overflow-x: auto; margin: 1.2em 0 0.4em; }
+table.data { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+table.data th, table.data td { padding: 8px 12px; border-bottom: 1px solid var(--rule); text-align: right; white-space: nowrap; }
+table.data th:first-child, table.data td:first-child { text-align: left; }
+table.data thead th { border-bottom: 2px solid var(--ink); font-weight: 700; }
+table.data caption { caption-side: bottom; text-align: left; color: var(--muted); font-size: 0.82rem; line-height: 1.5; padding-top: 8px; }
+.note { font-family: var(--sans); font-size: 0.85rem; line-height: 1.5; color: var(--muted); }
+.formula .eq-line { white-space: nowrap; }
 </style>
 </head>
 <body>
-
 <header class="hero">
   <div class="wrap hero-inner">
     <div class="hero-text">
       <h1>Rodrigo Silva</h1>
       <p class="lede">I build computational models of physical systems, calibrate them against real measurements, and quantify how far their predictions can be trusted.</p>
-      <p class="intro">PhD candidate at Eindhoven University of Technology, with the defense scheduled for December 2026. This page shows four projects from my MSc and PhD. I am looking for industry roles where models built on uncertain, real-world data drive real decisions.</p>
+      <p class="intro">PhD candidate at Eindhoven University of Technology, with the defense scheduled for December 2026. This page shows three projects from my PhD and MSc. I am looking for industry roles where models built on uncertain, real-world data drive real decisions.</p>
       <p class="contact">
         <a href="https://www.linkedin.com/in/rodrigosilva0494/">LinkedIn</a>
         <a href="mailto:rodrigo.silva0494@gmail.com">rodrigo.silva0494@gmail.com</a>
@@ -173,256 +189,258 @@ sub, sup { line-height: 0; }
 <div class="wrap">
 
   <section class="glance" aria-labelledby="glance-title">
-    <h2 id="glance-title">The four projects</h2>
+    <h2 id="glance-title">The three projects</h2>
     <ul>
       <li>
-        <a class="g-title" href="#calibration">Bayesian calibration across thermal, viscoelastic and hysteretic models</a>
-        <span class="g-note">One framework, three experiments, and a clear picture of when calibration works and when the model itself is the problem.</span>
-      </li>
-      <li>
-        <a class="g-title" href="#discretization">Discretization-optimized calibration</a>
-        <span class="g-note">Refines the numerical model only as far as the measurement noise justifies: about 42 times less computation on real data.</span>
+        <a class="g-title" href="#conductivity">From experiment to calibrated model: thermal conductivity</a>
+        <span class="g-note">A rig I built, a finite element model, and a calibration algorithm that stops refining when the data say it is good enough: about 40 times less computation.</span>
       </li>
       <li>
         <a class="g-title" href="#surrogates">Goal-oriented adaptivity with surrogates</a>
-        <span class="g-note">Up to 150 times faster Bayesian calibration, with the surrogate's uncertainty carried into the result.</span>
+        <span class="g-note">Bayesian calibration up to 150 times faster, with the surrogate's uncertainty included in the answer.</span>
       </li>
       <li>
-        <a class="g-title" href="#hifu">Bayesian design of tumor ablation with focused ultrasound</a>
-        <span class="g-note">Transducer position and heating times chosen under uncertain tissue properties.</span>
+        <a class="g-title" href="#hifu">Bayesian design of focused ultrasound tumor ablation</a>
+        <span class="g-note">Transducer position and exposure time optimized under uncertain tissue properties.</span>
       </li>
     </ul>
   </section>
 
   <!-- ===================== PROJECT 1 ===================== -->
-  <article class="project" id="calibration">
+  <article class="project" id="conductivity">
     <div class="project-head">
-      <h2>Bayesian calibration across thermal, viscoelastic and hysteretic models</h2>
-      <p class="status">PhD, Chapters 2 and 3. Chapter 3 is published in the International Journal for Uncertainty Quantification (2026). Chapter 2 is part of the DAMOCLES project at EAISI, TU/e.</p>
-      <p class="result"><b>Key result.</b> Calibration worked for the thermal, viscoelastic and Jiles–Atherton models, and exposed the Bouc–Wen model as unable to describe the material.</p>
+      <h2>From experiment to calibrated model: temperature-dependent thermal conductivity</h2>
+      <p class="status">PhD, Chapter 4. First author of the paper (preprint on arXiv, under review). I designed and built the experiment.</p>
+      <p class="result"><b>Key result.</b> About 40 times less computation (42×) than a fixed fine setting on the full real dataset. In a synthetic test, predictions stayed within 0.01% of a very fine reference.</p>
       <ul class="sources">
-        <li><a href="https://doi.org/10.1615/Int.J.UncertaintyQuantification.2026060967">Sampler comparison, Int. J. Uncertainty Quantification (2026)</a></li>
-        <li><a href="https://doi.org/10.3390/psf2025012004">Related conference paper on the squeeze flow problem, Physical Sciences Forum (2025)</a></li>
+        <li><a href="https://arxiv.org/abs/2604.01101">Preprint: arXiv:2604.01101</a></li>
       </ul>
     </div>
     <div class="project-body">
-      <h3>Problem</h3>
-      <p>Engineering simulations combine conservation laws, which are reliable, with constitutive equations, which describe how a material responds and are much less certain. Their parameters come from laboratory measurements that are noisy and limited. The question here: how well does Bayesian calibration work across very different kinds of material behavior, and what limits it?</p>
 
-      <h3>Approach</h3>
-      <p>I applied one Bayesian pipeline to three experiments: heat conduction in a paraffin wax column, large amplitude oscillatory shear of a shampoo in a rheometer (a nonlinear viscoelastic fluid, Giesekus model), and magnetic hysteresis measured with an Epstein frame (Jiles–Atherton and Bouc–Wen models). Priors come from the literature and preliminary estimates, the likelihood from the measurement error, and the posterior is explored with adaptive Metropolis–Hastings MCMC. Each calibrated model is then tested on independent data: a different source temperature, excitation frequency or field amplitude. I ran all the Bayesian analyses, and the heat conduction rig was my own design.</p>
+      <h3>The experiment</h3>
+      <p>I designed and built this rig myself. It is 3D-printed (PLA) around a column of paraffin wax. A brass plate at the bottom is heated by a 60 W Peltier element, and a controller holds the plate at a set temperature. Styrofoam insulates the sides, and the top is open to the air. Four temperature sensors along the axis and one for the ambient air record the response for about 14 hours.</p>
+
+      <figure class="fig" hidden>
+        <img src="images/p1-rig-measurements.png" alt="Photo of the 3D-printed heat conduction rig next to a plot of temperature against time for five sensors." style="--w: 640px">
+        <div class="slot">Missing: images/p1-rig-measurements.png</div>
+        <figcaption>The rig (left) and typical temperature measurements from the five sensors (right).</figcaption>
+      </figure>
+
+      <figure class="fig" hidden>
+        <img src="images/p1-schematic.png" alt="Schematic of the paraffin column: heat enters at the bottom, leaks through the sides and the top, with four sensors along the axis and a fifth for the ambient air." style="--w: 540px">
+        <div class="slot">Missing: images/p1-schematic.png</div>
+        <figcaption>Schematic of the system. Heat enters at the bottom and leaks out through the sides and the top. Sensors 1 to 4 sit along the axis, and sensor 5 measures the ambient air.</figcaption>
+      </figure>
+
+      <h3>The model</h3>
+      <p>The unknown is the thermal conductivity <var>k</var>(<var>T</var>) of the wax, which changes with temperature. Heat conduction along the column, with losses through the sides, is described by the first equation. The boundary conditions describe the heated plate (<var>x</var> = 0) and the open top (<var>x</var> = <var>L</var>). The initial temperature is the ambient temperature.</p>
+
+      <figure class="eq">
+        <div class="eqpanel">
+          <img src="images/p1-eq-heat.png" alt="Heat equation: density times specific heat times the time derivative of temperature equals the x derivative of conductivity times the x derivative of temperature, plus a side heat loss term." style="width: 462px">
+          <img src="images/p1-eq-bc.png" alt="Boundary conditions: conductivity times the temperature gradient equals a heat transfer coefficient times a temperature difference, at the heated plate and at the open top." style="width: 305px">
+        </div>
+        <figcaption>Heat equation and boundary conditions. <var>ρ</var> is the density, <var>c</var><sub>p</sub> the specific heat, <var>h</var> the heat transfer coefficients (source, side, top), <var>R</var> the column radius and <var>T</var><sub>∞</sub> the ambient temperature.</figcaption>
+      </figure>
+
+      <p>I solve this with linear finite elements in space and backward Euler time stepping, which is implicit in time. Each time step requires solving one linear system:</p>
+
+      <figure class="eq">
+        <div class="eqpanel">
+          <img src="images/p1-eq-fem.png" alt="Linear system for the nodal temperatures at the next time step, built from the capacitance matrix C, the conductance matrix K and the source vector s." style="width: 334px">
+        </div>
+        <figcaption><var>C</var> is the capacitance matrix, <var>K</var><sub>m</sub> the conductance matrix built from <var>k</var>(<var>T</var>) at time step <var>m</var>, <var>s</var> the source vector, Δ<var>t</var> the time step and <var>β</var> = 2<var>h</var><sub>side</sub> / (<var>Rρc</var><sub>p</sub>).</figcaption>
+      </figure>
+
+      <h3>The Bayesian part</h3>
+      <p>Calibration is posed as Bayesian inference. The likelihood models the data from the temperature sensors: the simulated temperatures plus measurement noise. The prior models what we already know about the conductivity values. The posterior, explored with MCMC, returns the conductivity with credible intervals instead of a single curve.</p>
       <div class="formula">
-        <span class="eq"><var>p</var>(<var>θ</var> | <var>d</var>) ∝ <var>p</var>(<var>d</var> | <var>θ</var>) <var>p</var>(<var>θ</var>), &nbsp; with &nbsp; <var>d</var> = <var>f</var>(<var>θ</var>) + <var>ε</var></span>
-        <span class="note">Measurements <var>d</var> update the parameters <var>θ</var> of the physics model <var>f</var>, given measurement error <var>ε</var>. The answer is a distribution, not a single value.</span>
+        <span class="eq-line"><var>P</var>(<var>p</var> | <var>d</var>) ∝ <var>P</var>(<var>p</var>) <var>P</var>(<var>d</var> | <var>p</var>)</span>
+        <span class="note">Posterior ∝ prior × likelihood. <var>p</var> are the conductivity parameters and <var>d</var> the sensor data.</span>
       </div>
 
-      <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p1-thermal-validation.png. Thesis Figure 2.5, both panels (a) and (b). -->
-        <img src="images/p1-thermal-validation.png" alt="Measured and estimated temperatures for the calibration run and an independent validation run of the heat conduction experiment.">
-        <div class="slot">Add images/p1-thermal-validation.png (thesis Figure 2.5, panels a and b)</div>
-        <figcaption>Heat conduction: measured and estimated temperatures for the calibration run (left) and an independent validation run with a different source temperature (right), with the distribution of the RMSD below each.</figcaption>
-      </figure>
-
-      <h3>Results</h3>
-      <ul class="points">
-        <li><b>Heat conduction.</b> Predictions stayed within about 0.23 °C RMSD of the calibration data, with good agreement on the independent run.</li>
-        <li><b>Viscoelastic shampoo.</b> The stress response was reproduced closely on the calibration data (0.5 Hz). On the validation data (1 Hz) the error grew to a few Pa, but the main features of the response were still reproduced.</li>
-        <li><b>Magnetic hysteresis.</b> The Jiles–Atherton model reproduced the loops on calibration and validation data. The Bouc–Wen model did not, even after calibration.</li>
-      </ul>
-      <p>The last result is the most useful one. When the model cannot describe the physics, calibration cannot rescue it, and the uncertainty bounds only describe a model that is wrong. Calibration makes this visible instead of hiding it.</p>
+      <h3>A model for the conductivity</h3>
+      <p>To estimate a function, we first need a model for it. I use piecewise linear functions because they are easy to understand and to model. The number of segments sets the complexity: more segments allow a more detailed curve.</p>
 
       <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p1-hysteresis-models.png. Thesis Figure 2.7a (Bouc-Wen) on the left and Figure 2.8a (Jiles-Atherton) on the right, placed side by side in one image. -->
-        <img src="images/p1-hysteresis-models.png" alt="Measured and simulated magnetic hysteresis loops for the Bouc–Wen model and the Jiles–Atherton model after Bayesian calibration.">
-        <div class="slot">Add images/p1-hysteresis-models.png (thesis Figure 2.7a next to Figure 2.8a)</div>
-        <figcaption>Magnetic hysteresis, same data and same calibration procedure. The Bouc–Wen model (left) cannot follow the measured loop. The Jiles–Atherton model (right) can.</figcaption>
+        <img src="images/p1-piecewise.png" alt="A conductivity curve against temperature approximated by piecewise linear functions with 4 segments and with 8 segments." style="--w: 640px">
+        <div class="slot">Missing: images/p1-piecewise.png</div>
+        <figcaption>A conductivity curve (blue) approximated by piecewise linear functions with 4 segments (left) and 8 segments (right).</figcaption>
       </figure>
 
-      <h3>Choosing the sampler</h3>
-      <p>A related question is which MCMC algorithm to use. With colleagues (Rinkens, Silva et al.), I compared Metropolis–Hastings, the Affine Invariant Stretch Move and the No-U-Turn Sampler (NUTS) on two real experiments: the thermal conduction problem with a finite element model, and a Newtonian squeeze flow with a semi-analytical model. This comparison did not include the viscoelastic or hysteresis problems. Convergence was measured as the KL divergence to a reference posterior, next to the usual Gelman–Rubin and effective sample size diagnostics. My part was the heat conduction setting and the analysis of the Metropolis–Hastings and NUTS samplers. NUTS and the Stretch Move sampler used existing Julia packages.</p>
-      <ul class="points">
-        <li>At a fixed number of samples, NUTS converged best.</li>
-        <li>Per model evaluation, NUTS lost to the other two, because each step needs many evaluations including gradients. For the finite element thermal model it gave no advantage per independent sample.</li>
-        <li>The default Stretch Move setup suits a broad range of problems, while Metropolis–Hastings needs proposal tuning that can cost as much as the sampling itself.</li>
-        <li>The standard diagnostics tracked the KL divergence qualitatively, but not in a clear quantitative way.</li>
-      </ul>
-      <p>The right sampler depends on how expensive the model is and whether gradients are available.</p>
+      <h3>The algorithm</h3>
+      <p>The algorithm I developed chooses how fine the model needs to be: the number of finite elements, the number of time steps, and the number of conductivity segments. It refines only until the numerical error is comparable to the measurement noise, and adds segments only while information criteria (BIC and DIC) say they are justified. It stops when the model is good enough for the data, instead of over-refining.</p>
+      <p>On the real data it adapted to the information in each dataset. With the full data (transient and steady state) it chose 24 elements, 512 time steps and 8 segments. With steady-state data only it chose 8 elements, 2 time steps and 2 segments.</p>
 
       <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p1-sampler-kl.png. Thesis Figure 3.10 (KL divergence and coverage, thermal problem). -->
-        <img src="images/p1-sampler-kl.png" alt="KL divergence and coverage of the sampled posterior for three MCMC samplers on the thermal conduction problem.">
-        <div class="slot">Add images/p1-sampler-kl.png (thesis Figure 3.10)</div>
-        <figcaption>KL divergence (top) and coverage (bottom) of the sampled posterior for the three samplers on the thermal problem, plotted against the number of samples (left) and the number of model evaluations (right).</figcaption>
+        <img src="images/p1-conductivity.png" alt="Estimated conductivity against temperature with credible intervals, for the full dataset and for the steady-state dataset, with histograms of the temperatures covered by each dataset." style="--w: 640px">
+        <div class="slot">Missing: images/p1-conductivity.png</div>
+        <figcaption>Estimated conductivity with credible intervals for the full dataset (left) and the steady-state dataset (right). The histograms show the temperatures covered by the data.</figcaption>
       </figure>
 
-      <h3>Limits</h3>
-      <p>The thermal case is the easy one: a linear model with informative transient data, so its good results should not be read as typical. The conclusions are drawn from these specific systems, not from a general proof.</p>
+      <figure class="fig" hidden>
+        <img src="images/p1-posterior-predictive.png" alt="Measured temperatures compared with the posterior predictive mean and credible intervals at the sensor locations, for the full dataset and the steady-state dataset." style="--w: 640px">
+        <div class="slot">Missing: images/p1-posterior-predictive.png</div>
+        <figcaption>Measured temperatures against the posterior predictive mean and credible intervals, for the full dataset (left) and the steady-state dataset (right).</figcaption>
+      </figure>
+
+      <h3>Result</h3>
+      <p>For the full dataset, the algorithm used about 40 times less computation (42×) than a fixed fine setting, and about 30,000 times less for the steady-state data. Accuracy is preserved: in a synthetic test, predictions deviated from a very fine reference by about 0.01% (at most 0.19 °C). In practice, calibration stops when more refinement no longer improves the answer, so computing time is not wasted.</p>
+      <p class="note">The real-data run illustrates the algorithm: the other physical properties were calibrated beforehand and held fixed, and the model is one-dimensional.</p>
     </div>
   </article>
 
   <!-- ===================== PROJECT 2 ===================== -->
-  <article class="project" id="discretization">
+  <article class="project" id="surrogates">
     <div class="project-head">
-      <h2>Discretization-optimized calibration</h2>
-      <p class="status">PhD, Chapter 4. First author. Preprint on arXiv, under review.</p>
-      <p class="result"><b>Key result.</b> About 42 times less computation than a fixed fine reference on the full real dataset, and about 30,500 times less on steady-state data.</p>
-      <ul class="sources">
-        <li><a href="https://arxiv.org/abs/2604.01101">arXiv:2604.01101</a></li>
-      </ul>
+      <h2>Goal-oriented adaptivity with Gaussian process surrogates</h2>
+      <p class="status">PhD, Chapter 5. Not yet published.</p>
+      <p class="result"><b>Key result.</b> About 150 times faster on a problem with 2 unknowns, and about 8 times faster on a harder problem with 4 unknowns, both including the cost of building the surrogate. The surrogate reproduces the sensor temperatures to about 0.03%.</p>
     </div>
     <div class="project-body">
-      <h3>Problem</h3>
-      <p>The thermal conductivity of paraffin wax depends on temperature, so the unknown is a curve <var>k</var>(<var>T</var>), not a single number. Estimating it from noisy sensor data needs a numerical model, and that model comes with choices: how fine the mesh and time steps are, and how many segments describe the curve. Too coarse and the estimate is biased. Too fine and the calibration takes needlessly long.</p>
 
-      <h3>Approach</h3>
-      <p>I developed an algorithm that makes these choices from the data itself. In an inner loop it refines the mesh and time step, guided by gradient-based optimization, and stops when the numerical error is no longer larger than the measurement noise (Morozov's discrepancy principle). In an outer loop it adds segments to the conductivity curve only while the information criteria (BIC and DIC) say the extra complexity is justified. MCMC then gives the uncertainty of the final curve, reported as 99% credible intervals.</p>
-      <div class="formula">
-        <span class="eq"><var>ρc<sub>p</sub></var> ∂<var>T</var>/∂<var>t</var> = ∂/∂<var>x</var> ( <var>k</var>(<var>T</var>) ∂<var>T</var>/∂<var>x</var> ) + (2<var>h</var><sub>side</sub> / <var>R</var>) (<var>T</var><sub>∞</sub> − <var>T</var>)</span><br>
-        <span class="eq"><var>d</var> = <var>f</var> + <var>ε</var><sub>pred</sub> + <var>ε</var><sub>meas</sub></span>
-        <span class="note">The unknown is the curve <var>k</var>(<var>T</var>). The numerical error <var>ε</var><sub>pred</sub> is kept small relative to the measurement noise <var>ε</var><sub>meas</sub>, and no smaller than that requires.</span>
-      </div>
+      <h3>The problem</h3>
+      <p>Find a hidden inclusion with lower thermal conductivity inside a block of material, using temperature readings. The block is heated at the bottom, insulated at the sides, and loses heat through the top, where four sensors measure temperature. The unknowns are the position, size and orientation of the inclusion.</p>
 
       <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p2-rig.png. Thesis Figure 4.1a (experimental heat conduction setup). -->
-        <img style="--w: 340px" src="images/p2-rig.png" alt="Experimental rig: a paraffin wax column in a 3D-printed housing, heated from below, with temperature sensors along its axis.">
-        <div class="slot">Add images/p2-rig.png (thesis Figure 4.1a)</div>
-        <figcaption>The experimental rig: a paraffin wax column in a 3D-printed housing, heated from below, with four temperature sensors along its axis and one for the ambient temperature.</figcaption>
+        <img src="images/p2-benchmark.png" alt="Schematic of a square block with a heated bottom, insulated sides, four sensors on the top boundary and an elliptical inclusion defined by its center, radii and angle." style="--w: 380px">
+        <div class="slot">Missing: images/p2-benchmark.png</div>
+        <figcaption>The benchmark problem: a heated bottom, insulated sides, four sensors on the top boundary, and an elliptical inclusion defined by its center, radii and angle.</figcaption>
+      </figure>
+
+      <h3>Goal-oriented refinement</h3>
+      <p>Bayesian calibration needs the simulation thousands of times, but only the sensor temperatures enter the likelihood. Goal-oriented refinement estimates the numerical error in those temperatures and refines the mesh only where it affects them. This is what the figure shows: refinement concentrates near the inclusion and the sensors.</p>
+
+      <figure class="fig" hidden>
+        <img src="images/p2-adaptive-mesh.png" alt="Comparison of uniform and goal-oriented adaptive mesh refinement around an inclusion and four sensors." style="--w: 460px">
+        <div class="slot">Missing: images/p2-adaptive-mesh.png</div>
+        <figcaption>Uniform refinement (left) against goal-oriented adaptive refinement (right) with about the same number of elements. The adaptive mesh concentrates near the inclusion and the sensors.</figcaption>
+      </figure>
+
+      <h3>Surrogate models</h3>
+      <p>I train Gaussian process surrogates of the sensor temperatures on these inexpensive simulations. Each surrogate predicts a temperature and its own uncertainty, and that uncertainty is added to the likelihood. A less reliable surrogate therefore widens the result instead of biasing it. With 64 training simulations, the relative error is about 0.03%, and the predictive uncertainty is about three orders of magnitude smaller than the temperatures.</p>
+
+      <figure class="fig" hidden>
+        <img src="images/p2-gp.png" alt="Gaussian process prediction of the temperature at sensor 1 as a function of the inclusion position: predictive mean surface with training points, and predictive standard deviation surface." style="--w: 620px">
+        <div class="slot">Missing: images/p2-gp.png</div>
+        <figcaption>Gaussian process prediction of the temperature at sensor 1 as a function of the inclusion position: predictive mean (left) and predictive standard deviation (right). Dots mark the training simulations.</figcaption>
       </figure>
 
       <h3>Results</h3>
       <ul class="points">
-        <li><b>Synthetic data.</b> Checked against a very fine reference solution (128 elements, 4096 time steps): the relative difference in predicted temperatures was about 0.01%, and the largest deviation was 0.19 °C.</li>
-        <li><b>Real rig data, full dataset.</b> A 14 hour experiment with four sensors. With transient and steady-state data the algorithm chose 24 elements, 512 time steps and 8 curve segments, using about 42 times less computation than the fixed fine reference.</li>
-        <li><b>Real rig data, steady state only.</b> It chose 8 elements, 2 time steps and 2 segments, about 30,500 times less computation, and the predictions still agreed with the measurements.</li>
-        <li>Computation is counted in solver work units, which tracked CPU time.</li>
+        <li><b>Circular inclusion, 2 unknowns.</b> About 150 times faster than finite element MCMC: about 20 s against about 3,100 s for 10,000 samples, including the training simulations.</li>
+        <li><b>Elliptical inclusion, 4 unknowns.</b> About 8 times faster, including the full offline cost. This is a conservative estimate, because the finite element model here is cheap. Larger gains are expected for more expensive models. The table shows the recovered parameters.</li>
       </ul>
-      <p>The algorithm adapts to how informative the data are, instead of applying one fixed resolution to every dataset.</p>
 
-      <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p2-conductivity.png. Thesis Figure 4.16, panels (a) full regime and (b) steady state. -->
-        <img src="images/p2-conductivity.png" alt="Estimated temperature-dependent conductivity for the full dataset and for the steady-state dataset.">
-        <div class="slot">Add images/p2-conductivity.png (thesis Figure 4.16, panels a and b)</div>
-        <figcaption>Estimated conductivity for the full dataset (left) and the steady-state dataset (right), with the temperature coverage of the data below. The steady-state data support a simpler model.</figcaption>
-      </figure>
+      <div class="datawrap">
+        <table class="data">
+          <caption>Elliptical inclusion: estimated parameters against the known true values. The position and the minor radius are recovered well. The angle is the hard one: four sensors carry little information about rotation, and the wide interval says so.</caption>
+          <thead>
+            <tr><th>Parameter</th><th>True value</th><th>Posterior mean</th><th>Std. dev.</th><th>95% interval</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Center, <var>x</var><sub>1</sub></td><td>0.300</td><td>0.289</td><td>0.045</td><td>0.194 to 0.377</td></tr>
+            <tr><td>Center, <var>x</var><sub>2</sub></td><td>0.600</td><td>0.581</td><td>0.081</td><td>0.374 to 0.717</td></tr>
+            <tr><td>Minor radius</td><td>0.100</td><td>0.105</td><td>0.009</td><td>0.086 to 0.123</td></tr>
+            <tr><td>Angle (degrees)</td><td>60.0</td><td>76.5</td><td>38.2</td><td>8.1 to 155.5</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-      <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p2-posterior-predictive.png. Thesis Figure 4.17 (measurements vs posterior predictive distributions). -->
-        <img src="images/p2-posterior-predictive.png" alt="Measured temperatures compared with posterior predictive means and 99% credible intervals at the sensor locations.">
-        <div class="slot">Add images/p2-posterior-predictive.png (thesis Figure 4.17)</div>
-        <figcaption>Measured temperatures against the posterior predictive mean and 99% credible intervals at the sensor locations.</figcaption>
-      </figure>
-
-      <h3>Limits</h3>
-      <p>The real-data run illustrates the algorithm: the other physical properties were calibrated beforehand and held fixed. The method is tied to quantities that relate closely to the likelihood, here the sensor temperatures, and it was shown on a low-dimensional one-dimensional problem. Larger problems would raise the cost, which is where surrogate models come in.</p>
+      <p>In practice, this brings Bayesian calibration of expensive simulations within reach, and a cheaper surrogate does not mean an overconfident answer.</p>
+      <p class="note">The benchmarks are two-dimensional. Larger problems would need sparse Gaussian process methods.</p>
     </div>
   </article>
 
   <!-- ===================== PROJECT 3 ===================== -->
-  <article class="project" id="surrogates">
-    <div class="project-head">
-      <h2>Goal-oriented adaptivity with surrogates</h2>
-      <p class="status">PhD, Chapter 5. Not yet published.</p>
-      <p class="result"><b>Key result.</b> About 150 times faster on a problem with 2 unknowns, and about 8 times faster on a harder problem with 4 unknowns, both including the cost of building the surrogate.</p>
-    </div>
-    <div class="project-body">
-      <h3>Problem</h3>
-      <p>MCMC needs the forward model thousands of times, and each finite element solve is expensive. But only the sensor readings enter the likelihood. If those readings are accurate, the rest of the solution does not need to be.</p>
-
-      <h3>Approach</h3>
-      <p>I combined two ideas. Offline, goal-oriented adaptive finite elements estimate the error in the sensor readings and refine the mesh only where it matters: near steep gradients and near the sensors. This produces training data cheaply. Online, Gaussian process surrogates of the sensor readings replace the finite element solves inside MCMC. The uncertainty from the discretization and from the surrogate is added to the likelihood, so a less trustworthy surrogate widens the posterior instead of silently biasing it. The test problem is a block of material with a hidden inclusion, whose position, size and orientation are inferred from four temperature sensors.</p>
-      <div class="formula">
-        <span class="eq"><b>Σ</b> = <b>Σ</b><sub>noise</sub> + <b>Σ</b><sub>surrogate</sub></span>
-        <span class="note">In the likelihood, the surrogate's own uncertainty adds to the measurement noise.</span>
-      </div>
-
-      <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p3-adaptive-mesh.png. Thesis Figure 5.3 (uniform vs adaptive mesh refinement). -->
-        <img style="--w: 460px" src="images/p3-adaptive-mesh.png" alt="Comparison of uniform and goal-oriented adaptive mesh refinement around an inclusion and four sensors.">
-        <div class="slot">Add images/p3-adaptive-mesh.png (thesis Figure 5.3)</div>
-        <figcaption>Uniform refinement (left) against goal-oriented adaptive refinement (right) with about the same number of elements. The adaptive mesh concentrates near the inclusion and the sensors.</figcaption>
-      </figure>
-
-      <h3>Results</h3>
-      <ul class="points">
-        <li>For the same number of unknowns, adaptive refinement reached smaller errors than uniform refinement, at the optimal convergence rate.</li>
-        <li><b>Circular inclusion (2 unknowns).</b> About 150 times faster than finite element MCMC: about 20 s against about 3,100 s for 10,000 samples, including the cost of generating the training data.</li>
-        <li><b>Elliptical inclusion (4 unknowns).</b> About 8 times faster, including the full offline cost. This is a conservative estimate because the finite element model here is cheap. Larger gains are expected for more expensive models.</li>
-        <li>Position and size were recovered, with the true values inside the 95% credible intervals. The orientation is hard to determine from four sensors, and the posterior said so with a wide interval.</li>
-        <li>More training data and finer meshes improved the surrogate, with diminishing returns. Multi-output Gaussian processes gave only modest gains over independent ones.</li>
-      </ul>
-      <p>There are two speedups here, not one: 150 times when the problem is small, 8 times when it is harder.</p>
-
-      <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p3-surrogate-accuracy.png. Thesis Figure 5.7 (relative prediction error vs number of training data). -->
-        <img src="images/p3-surrogate-accuracy.png" alt="Relative prediction error of the surrogates for different numbers of training samples, for independent Gaussian processes and for multi-output models with 1 to 4 latent functions.">
-        <div class="slot">Add images/p3-surrogate-accuracy.png (thesis Figure 5.7)</div>
-        <figcaption>Relative prediction error against the number of training points, for independent Gaussian processes and for multi-output models with 1 to 4 latent functions. The best models reach about 0.01% error and gain little beyond 64 points.</figcaption>
-      </figure>
-
-      <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p3-markov-chains.png. Thesis Figure 5.8 (panels a and b: 4 vs 256 training points). -->
-        <img src="images/p3-markov-chains.png" alt="Markov chains for the inclusion position parameters obtained with 4 and with 256 training points.">
-        <div class="slot">Add images/p3-markov-chains.png (thesis Figure 5.8, panels a and b)</div>
-        <figcaption>Markov chains for the inclusion position with 4 training points (left) and 256 training points (right). With few training points the surrogate is uncertain, and the posterior is broader.</figcaption>
-      </figure>
-
-      <h3>Limits</h3>
-      <p>The benchmarks are two dimensional. The link between finite element error estimates and surrogate uncertainty is simplified. Gaussian process training sets grow quickly with the number of parameters, so larger problems would need sparse methods.</p>
-    </div>
-  </article>
-
-  <!-- ===================== PROJECT 4 ===================== -->
   <article class="project" id="hifu">
     <div class="project-head">
-      <h2>Bayesian design of tumor ablation with focused ultrasound</h2>
+      <h2>Bayesian design of focused ultrasound tumor ablation</h2>
       <p class="status">MSc research. First author. Published in Numerical Heat Transfer, Part B: Fundamentals (2024), with M. Alaeian and H. Orlande.</p>
-      <p class="result"><b>Key result.</b> For a 3×5 mm tumor, two heating sessions instead of one raised the damage probability above 94% across the whole tumor and reduced damage to healthy tissue.</p>
+      <p class="result"><b>Key result.</b> For a 1×5 mm tumor, one exposure of about 15 s gives a damage probability above 94% in the tumor and below 52% in the healthy tissue region. Larger tumors needed two to four sessions.</p>
       <ul class="sources">
         <li><a href="https://doi.org/10.1080/10407790.2023.2228022">Numerical Heat Transfer, Part B (2024)</a></li>
       </ul>
     </div>
     <div class="project-body">
-      <h3>Problem</h3>
-      <p>High intensity focused ultrasound (HIFU) can destroy a tumor without surgery by heating a small focal region. Treatment planning relies on simulation, but tissue properties are known only roughly. Which transducer position and heating times ablate the tumor reliably while sparing healthy tissue?</p>
 
-      <h3>Approach</h3>
-      <p>I chained three simulations: nonlinear ultrasound propagation (the k-Wave toolbox in MATLAB), heat conduction driven by the absorbed ultrasound, and Arrhenius thermal damage, which gives the probability that cells at each location are destroyed. The design problem is then posed as Bayesian inference. The transducer position and the heating time of each session are the unknowns, tissue properties carry Gaussian uncertainty, and the likelihood encodes the desired outcome: a damage probability near 100% in the tumor, an open margin around it, and low damage elsewhere (beta distributions). A two-block Metropolis–Hastings sampler optimizes the design variables while the tissue properties only contribute uncertainty.</p>
-      <div class="formula">
-        <span class="eq">Ω = ∫ <var>A</var> exp( −<var>E</var><sub>a</sub> / <var>RT</var>(<var>t′</var>) ) d<var>t′</var>, &nbsp; <var>Y</var> = 1 − e<sup>−Ω</sup></span>
-        <span class="note"><var>Y</var> is the probability that the cells at a location are thermally damaged. It is computed from the temperature history <var>T</var>.</span>
-      </div>
+      <h3>The goal</h3>
+      <p>Focused ultrasound can ablate a tumor without surgery by heating a small region. The goal is to find the ultrasound position and the exposure time that ablate the target location without considerably damaging the surrounding area, while accounting for the uncertainty of all the physical properties.</p>
+
+      <h3>Acoustic model</h3>
+      <p>Ultrasound propagation follows mass and momentum balance, with a nonlinear pressure and density relation and attenuation. I solved it with k-Wave, a MATLAB toolbox.</p>
+      <figure class="eq">
+        <div class="eqpanel">
+          <img src="images/p3-eq-acoustic.png" alt="Acoustic model: mass balance, momentum balance, and the relation between pressure and density including nonlinearity and attenuation." style="width: 464px">
+        </div>
+        <figcaption><var>ρ</var> is the density, <var>v</var> the velocity, <var>p</var> the pressure and <var>c</var><sub>0</sub> the speed of sound. <var>B</var>/<var>A</var> is the nonlinearity parameter and <var>J</var> accounts for attenuation.</figcaption>
+      </figure>
+
+      <h3>Heat and thermal damage</h3>
+      <p>The absorbed ultrasound becomes a heat source that depends on the pressure field, obtained from the acoustic problem:</p>
+      <figure class="eq">
+        <div class="eqpanel">
+          <img src="images/p3-eq-source.png" alt="Heat source as a sum over harmonics of attenuation times squared pressure divided by density times speed of sound." style="width: 200px">
+        </div>
+        <figcaption><var>Q</var> is the heat source, summed over the <var>N</var> harmonics of the ultrasound. <var>α</var><sub>n</sub> is the attenuation and <var>p</var><sub>n</sub> the pressure of harmonic <var>n</var>.</figcaption>
+      </figure>
+      <p>This source drives the heat equation. For exposures of about 15 s, perfusion and metabolism are negligible compared with the ultrasound source, so the simulations keep only the conduction part.</p>
+      <figure class="eq">
+        <div class="eqpanel">
+          <img src="images/p3-eq-heat.png" alt="Bioheat equation with conduction, blood perfusion, metabolic heat and the ultrasound heat source." style="width: 589px">
+        </div>
+        <figcaption>Conduction, blood perfusion, metabolic heat and the ultrasound source <var>Q</var>*. Perfusion and metabolism are dropped in the simulations.</figcaption>
+      </figure>
+      <p>With the temperature distribution, the thermal damage follows from an Arrhenius model, and from it the probability that cells are destroyed:</p>
+      <figure class="eq">
+        <div class="eqpanel">
+          <img src="images/p3-eq-damage.png" alt="Thermal damage as the time integral of a frequency factor times an exponential of minus activation energy over gas constant times temperature." style="width: 255px">
+          <img src="images/p3-eq-prob.png" alt="Probability of cell damage equals one minus the exponential of minus the thermal damage." style="width: 247px">
+        </div>
+        <figcaption><var>Ω</var> is the thermal damage, <var>A</var> a frequency factor, <var>E</var><sub>a</sub> the activation energy, <var>R</var> the gas constant, <var>C</var> the fraction of undamaged cells and <var>Y</var> the probability that the cells at a location are damaged.</figcaption>
+      </figure>
+
+      <h3>Bayesian design</h3>
+      <p>The unknowns are the transducer position and the exposure time, together with the uncertain tissue properties. They are sampled with MCMC. The likelihood describes the desired outcome: near-certain damage in the tumor, an open margin around it, and low damage elsewhere. The sampler optimizes the design while the tissue properties only add uncertainty. The next figures show the starting position of the transducer, the Markov chains converging to the optimal solution, and the final setting.</p>
 
       <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p4-geometry.png. MSc paper Figure 1 (domains with water, skin, fat, muscle and the three tumors). -->
-        <img style="--w: 540px" src="images/p4-geometry.png" alt="Layered domains of water, skin, fat and muscle with three rectangular tumor shapes.">
-        <div class="slot">Add images/p4-geometry.png (MSc paper Figure 1)</div>
-        <figcaption>The three test cases: layers of water, skin, fat and muscle, with tumors of 1×5 mm, 3×5 mm and 5×1 mm.</figcaption>
+        <img src="images/p3-initial.png" alt="Initial position of the ultrasound transducer, shown as an arc at the top, above layers of water, skin, fat and muscle, with the tumor in the muscle." style="--w: 340px">
+        <div class="slot">Missing: images/p3-initial.png</div>
+        <figcaption>Initial position of the transducer (the arc at the top). The tumor is the orange rectangle in the muscle layer.</figcaption>
+      </figure>
+
+      <figure class="fig" hidden>
+        <img src="images/p3-chains.png" alt="Markov chains for the horizontal position, the vertical position and the heating time, moving from their starting values to stable optimal values." style="--w: 600px">
+        <div class="slot">Missing: images/p3-chains.png</div>
+        <figcaption>Markov chains for the horizontal position (top), the vertical position (middle) and the heating time (bottom, in seconds). They move quickly from the starting values to stable optimal values.</figcaption>
+      </figure>
+
+      <figure class="fig" hidden>
+        <img src="images/p3-optimal.png" alt="Optimal position of the ultrasound transducer above the tissue layers, centered over the tumor." style="--w: 340px">
+        <div class="slot">Missing: images/p3-optimal.png</div>
+        <figcaption>Optimal position of the transducer: centered over the tumor and closer to the tissue.</figcaption>
       </figure>
 
       <h3>Results</h3>
-      <ul class="points">
-        <li><b>1×5 mm tumor, one session.</b> Heating of about 15 s with the transducer centered. The damage probability was above 94% in the tumor and below 52% in the healthy tissue region. The peak temperature was about 62 °C, which avoids boiling.</li>
-        <li><b>3×5 mm tumor.</b> One session left parts of the tumor under-treated while damaging healthy tissue above it. Two sessions raised the probability above 94% in the whole tumor and reduced the collateral damage.</li>
-        <li><b>5×1 mm tumor.</b> Four sessions (12 design variables), with the focus moving across the tumor. The tumor probability was above about 90%. Healthy tissue along the beam path still reached about 80% in places, so the shape and position of a tumor limit what a fixed transducer can do.</li>
-        <li>The design variables were estimated with small uncertainty (about 0.1 mm and 0.1 s in the single-session case). Uncertainty in the pressure, heat source, temperature and damage fields came as a by-product.</li>
-      </ul>
+      <p>The thermal damage is concentrated in the tumor, with its mean on the left and its uncertainty on the right.</p>
 
       <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p4-damage-regions.png. MSc paper Figure 14 (mean damage probability in tumor, transition region and healthy tissue, case 1). -->
-        <img src="images/p4-damage-regions.png" alt="Mean probability of thermally damaged cells in the tumor, the transition region and the healthy tissue for the first test case.">
-        <div class="slot">Add images/p4-damage-regions.png (MSc paper Figure 14)</div>
-        <figcaption>Probability of thermal damage for the 1×5 mm tumor: inside the tumor (left), in the margin around it (middle) and in healthy tissue (right).</figcaption>
+        <img src="images/p3-damage.png" alt="Mean and standard deviation of the thermal damage in the tumor region." style="--w: 560px">
+        <div class="slot">Missing: images/p3-damage.png</div>
+        <figcaption>Thermal damage: mean (left) and standard deviation (right).</figcaption>
       </figure>
+
+      <p>Splitting the domain into regions shows the intended pattern: the damage is large in the tumor, less aggressive in the surrounding area, and minimal further away.</p>
 
       <figure class="fig" hidden>
-        <!-- FIGURE SLOT: images/p4-four-sessions.png. MSc paper Figure 21 (damage probability with four heating sessions, case 3). -->
-        <img src="images/p4-four-sessions.png" alt="Mean and standard deviation of the probability of thermally damaged cells after four heating sessions.">
-        <div class="slot">Add images/p4-four-sessions.png (MSc paper Figure 21, panels a and b)</div>
-        <figcaption>Damage probability after four heating sessions for the 5×1 mm tumor: mean (left) and standard deviation (right).</figcaption>
+        <img src="images/p3-regions.png" alt="Probability of thermal damage in the tumor, in the surrounding margin and in the healthy tissue." style="--w: 640px">
+        <div class="slot">Missing: images/p3-regions.png</div>
+        <figcaption>Probability of damage in the tumor (left), in the surrounding margin (middle) and in the healthy tissue farther away (right).</figcaption>
       </figure>
 
-      <h3>Limits</h3>
-      <p>The tumors are idealized two dimensional shapes, not patient data. One single-session design took about 90 hours on a workstation, so computational cost is the main obstacle to practical use.</p>
+      <p>The design variables were estimated with small uncertainty (about 0.1 mm and 0.1 s). Larger tumors needed two heating sessions (3×5 mm) and four (5×1 mm), and the sessions shift the focus across the tumor. In practice, the plan comes with a quantified reliability under uncertain tissue properties.</p>
+      <p class="note">The tumors are idealized two-dimensional shapes. One single-session design took about 90 hours on a workstation, so computing cost is the main obstacle to practical use.</p>
     </div>
   </article>
 
