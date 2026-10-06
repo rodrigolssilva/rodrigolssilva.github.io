@@ -158,7 +158,7 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
     <div class="hero-text">
       <h1>Rodrigo Silva</h1>
       <p class="lede">I build computational models of physical systems, calibrate them against real measurements, and quantify how far their predictions can be trusted.</p>
-      <p class="intro">PhD candidate at Eindhoven University of Technology, with the defense scheduled for December 2026. This page shows three projects from my PhD and MSc. I am looking for industry roles where models built on uncertain, real-world data drive real decisions.</p>
+      <p class="intro">This page shows three projects from my PhD and MSc. I am looking for industry roles where physics-based models support engineering decisions under uncertainty.</p>
       <p class="contact">
         <a href="https://www.linkedin.com/in/rodrigosilva0494/">LinkedIn</a>
         <a href="mailto:rodrigo.silva0494@gmail.com">rodrigo.silva0494@gmail.com</a>
@@ -193,15 +193,15 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
     <ul>
       <li>
         <a class="g-title" href="#conductivity">From experiment to calibrated model: thermal conductivity</a>
-        <span class="g-note">A rig I built, a finite element model, and a calibration algorithm that stops refining when the data say it is good enough: about 40 times less computation.</span>
+        <span class="g-note">A prototype I built and a nonlinear heat transfer problem with temperature-dependent thermal conductivity, calibrated with an algorithm that stops refining when the model is good enough: about 40 times less computation with 99% accuracy.</span>
       </li>
       <li>
-        <a class="g-title" href="#surrogates">Goal-oriented adaptivity with surrogates</a>
-        <span class="g-note">Bayesian calibration up to 150 times faster, with the surrogate's uncertainty included in the answer.</span>
+        <a class="g-title" href="#surrogates">Goal-oriented adaptive finite elements with Gaussian process surrogates</a>
+        <span class="g-note">Adaptive finite element refinement and Gaussian process surrogates make Bayesian calibration up to 150 times faster, with the surrogate's uncertainty included in the answer.</span>
       </li>
       <li>
         <a class="g-title" href="#hifu">Bayesian design of focused ultrasound tumor ablation</a>
-        <span class="g-note">Transducer position and exposure time optimized under uncertain tissue properties.</span>
+        <span class="g-note">A biomedical application: planning the transducer position and exposure time for thermal ablation of tumors with focused ultrasound, under uncertain tissue properties.</span>
       </li>
     </ul>
   </section>
@@ -210,8 +210,8 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
   <article class="project" id="conductivity">
     <div class="project-head">
       <h2>From experiment to calibrated model: temperature-dependent thermal conductivity</h2>
-      <p class="status">PhD, Chapter 4. First author of the paper (preprint on arXiv, under review). I designed and built the experiment.</p>
-      <p class="result"><b>Key result.</b> About 40 times less computation (42×) than a fixed fine setting on the full real dataset. In a synthetic test, predictions stayed within 0.01% of a very fine reference.</p>
+      <p class="status">PhD, Chapter 4. Preprint on arXiv.</p>
+      <p class="result"><b>Key result.</b> About 40 times less computation with 99% accuracy, on the transient dataset.</p>
       <ul class="sources">
         <li><a href="https://arxiv.org/abs/2604.01101">Preprint: arXiv:2604.01101</a></li>
       </ul>
@@ -219,12 +219,12 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
     <div class="project-body">
 
       <h3>The experiment</h3>
-      <p>I designed and built this rig myself. It is 3D-printed (PLA) around a column of paraffin wax. A brass plate at the bottom is heated by a 60 W Peltier element, and a controller holds the plate at a set temperature. Styrofoam insulates the sides, and the top is open to the air. Four temperature sensors along the axis and one for the ambient air record the response for about 14 hours.</p>
+      <p>I designed and built this prototype myself. It is 3D-printed around a column of paraffin wax. A brass plate at the bottom is heated, and a controller holds the plate at a set temperature. Styrofoam insulates the sides, and the top is open to the air. Four temperature sensors along the axis and one for the ambient air record the response for about 14 hours.</p>
 
       <figure class="fig" hidden>
-        <img src="images/p1-rig-measurements.png" alt="Photo of the 3D-printed heat conduction rig next to a plot of temperature against time for five sensors." style="--w: 640px">
+        <img src="images/p1-rig-measurements.png" alt="Photo of the 3D-printed heat conduction prototype next to a plot of temperature against time for five sensors." style="--w: 640px">
         <div class="slot">Missing: images/p1-rig-measurements.png</div>
-        <figcaption>The rig (left) and typical temperature measurements from the five sensors (right).</figcaption>
+        <figcaption>The prototype (left) and typical temperature measurements from the five sensors (right).</figcaption>
       </figure>
 
       <figure class="fig" hidden>
@@ -234,7 +234,7 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
       </figure>
 
       <h3>The model</h3>
-      <p>The unknown is the thermal conductivity <var>k</var>(<var>T</var>) of the wax, which changes with temperature. Heat conduction along the column, with losses through the sides, is described by the first equation. The boundary conditions describe the heated plate (<var>x</var> = 0) and the open top (<var>x</var> = <var>L</var>). The initial temperature is the ambient temperature.</p>
+      <p>The example is a nonlinear heat transfer problem. The thermal conductivity <var>k</var>(<var>T</var>) of the wax depends on temperature, which makes the problem nonlinear, and <var>k</var>(<var>T</var>) is the unknown. Heat conduction along the column, with losses through the sides, is described by the first equation. The boundary conditions describe the heated plate (<var>x</var> = 0) and the open top (<var>x</var> = <var>L</var>). The initial temperature is the ambient temperature.</p>
 
       <figure class="eq">
         <div class="eqpanel">
@@ -270,7 +270,7 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
       </figure>
 
       <h3>The algorithm</h3>
-      <p>The algorithm I developed chooses how fine the model needs to be: the number of finite elements, the number of time steps, and the number of conductivity segments. It refines only until the numerical error is comparable to the measurement noise, and adds segments only while information criteria (BIC and DIC) say they are justified. It stops when the model is good enough for the data, instead of over-refining.</p>
+      <p>The algorithm chooses how fine the model needs to be: the number of finite elements, the number of time steps, and the number of conductivity segments. It refines only until the numerical error is comparable to the measurement noise, and adds segments only while information criteria (BIC and DIC) say they are justified. It stops when the model is good enough for the data, instead of over-refining.</p>
       <p>On the real data it adapted to the information in each dataset. With the full data (transient and steady state) it chose 24 elements, 512 time steps and 8 segments. With steady-state data only it chose 8 elements, 2 time steps and 2 segments.</p>
 
       <figure class="fig" hidden>
@@ -286,7 +286,7 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
       </figure>
 
       <h3>Result</h3>
-      <p>For the full dataset, the algorithm used about 40 times less computation (42×) than a fixed fine setting, and about 30,000 times less for the steady-state data. Accuracy is preserved: in a synthetic test, predictions deviated from a very fine reference by about 0.01% (at most 0.19 °C). In practice, calibration stops when more refinement no longer improves the answer, so computing time is not wasted.</p>
+      <p>For the transient dataset, the algorithm used about 40 times less computation than a fixed fine setting, while preserving 99% accuracy: in a synthetic test, predictions deviated from a very fine reference by about 0.01%. In practice, calibration stops when more refinement no longer improves the answer, so computing time is not wasted.</p>
       <p class="note">The real-data run illustrates the algorithm: the other physical properties were calibrated beforehand and held fixed, and the model is one-dimensional.</p>
     </div>
   </article>
@@ -294,9 +294,9 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
   <!-- ===================== PROJECT 2 ===================== -->
   <article class="project" id="surrogates">
     <div class="project-head">
-      <h2>Goal-oriented adaptivity with Gaussian process surrogates</h2>
+      <h2>Goal-oriented adaptive finite elements with Gaussian process surrogates</h2>
       <p class="status">PhD, Chapter 5. Not yet published.</p>
-      <p class="result"><b>Key result.</b> About 150 times faster on a problem with 2 unknowns, and about 8 times faster on a harder problem with 4 unknowns, both including the cost of building the surrogate. The surrogate reproduces the sensor temperatures to about 0.03%.</p>
+      <p class="result"><b>Key result.</b> About 150 times faster Bayesian calibration on a problem with 2 unknowns, including the cost of building the surrogate. The surrogate reproduces the sensor temperatures to about 0.03%.</p>
     </div>
     <div class="project-body">
 
@@ -328,10 +328,8 @@ table.data caption { caption-side: bottom; text-align: left; color: var(--muted)
       </figure>
 
       <h3>Results</h3>
-      <ul class="points">
-        <li><b>Circular inclusion, 2 unknowns.</b> About 150 times faster than finite element MCMC: about 20 s against about 3,100 s for 10,000 samples, including the training simulations.</li>
-        <li><b>Elliptical inclusion, 4 unknowns.</b> About 8 times faster, including the full offline cost. This is a conservative estimate, because the finite element model here is cheap. Larger gains are expected for more expensive models. The table shows the recovered parameters.</li>
-      </ul>
+      <p><b>Circular inclusion, 2 unknowns.</b> About 150 times faster than finite element MCMC: about 20 s against about 3,100 s for 10,000 samples, including the training simulations.</p>
+      <p>The table shows the recovered parameters for an elliptical inclusion with 4 unknowns.</p>
 
       <div class="datawrap">
         <table class="data">
