@@ -116,7 +116,7 @@ sub, sup { line-height: 0; }
 /* Figures: hidden until the image file exists. Add ?draft to the URL to see empty slots. */
 .fig { margin: 1.6em 0; }
 .fig[hidden] { display: none; }
-.fig img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--rule); }
+.fig img { display: block; width: 100%; max-width: var(--w, 100%); height: auto; background: #fff; border: 1px solid var(--rule); }
 .fig figcaption { font-family: var(--sans); font-size: 0.82rem; line-height: 1.5; color: var(--muted); margin-top: 8px; }
 .fig .slot { display: none; }
 .fig.missing img { display: none; }
@@ -220,7 +220,7 @@ sub, sup { line-height: 0; }
         <!-- FIGURE SLOT: images/p1-thermal-validation.png. Thesis Figure 2.5, both panels (a) and (b). -->
         <img src="images/p1-thermal-validation.png" alt="Measured and estimated temperatures for the calibration run and an independent validation run of the heat conduction experiment.">
         <div class="slot">Add images/p1-thermal-validation.png (thesis Figure 2.5, panels a and b)</div>
-        <figcaption>Heat conduction: measured and estimated temperatures for the calibration run (left) and an independent validation run with a different source temperature (right).</figcaption>
+        <figcaption>Heat conduction: measured and estimated temperatures for the calibration run (left) and an independent validation run with a different source temperature (right), with the distribution of the RMSD below each.</figcaption>
       </figure>
 
       <h3>Results</h3>
@@ -252,7 +252,7 @@ sub, sup { line-height: 0; }
         <!-- FIGURE SLOT: images/p1-sampler-kl.png. Thesis Figure 3.10 (KL divergence and coverage, thermal problem). -->
         <img src="images/p1-sampler-kl.png" alt="KL divergence and coverage of the sampled posterior for three MCMC samplers on the thermal conduction problem.">
         <div class="slot">Add images/p1-sampler-kl.png (thesis Figure 3.10)</div>
-        <figcaption>KL divergence and coverage of the sampled posterior for the three samplers on the thermal problem.</figcaption>
+        <figcaption>KL divergence (top) and coverage (bottom) of the sampled posterior for the three samplers on the thermal problem, plotted against the number of samples (left) and the number of model evaluations (right).</figcaption>
       </figure>
 
       <h3>Limits</h3>
@@ -284,7 +284,7 @@ sub, sup { line-height: 0; }
 
       <figure class="fig" hidden>
         <!-- FIGURE SLOT: images/p2-rig.png. Thesis Figure 4.1a (experimental heat conduction setup). -->
-        <img src="images/p2-rig.png" alt="Experimental rig: a paraffin wax column in a 3D-printed housing, heated from below, with temperature sensors along its axis.">
+        <img style="--w: 340px" src="images/p2-rig.png" alt="Experimental rig: a paraffin wax column in a 3D-printed housing, heated from below, with temperature sensors along its axis.">
         <div class="slot">Add images/p2-rig.png (thesis Figure 4.1a)</div>
         <figcaption>The experimental rig: a paraffin wax column in a 3D-printed housing, heated from below, with four temperature sensors along its axis and one for the ambient temperature.</figcaption>
       </figure>
@@ -302,7 +302,7 @@ sub, sup { line-height: 0; }
         <!-- FIGURE SLOT: images/p2-conductivity.png. Thesis Figure 4.16, panels (a) full regime and (b) steady state. -->
         <img src="images/p2-conductivity.png" alt="Estimated temperature-dependent conductivity for the full dataset and for the steady-state dataset.">
         <div class="slot">Add images/p2-conductivity.png (thesis Figure 4.16, panels a and b)</div>
-        <figcaption>Estimated conductivity for the full dataset (left) and the steady-state dataset (right). The steady-state data support a simpler model.</figcaption>
+        <figcaption>Estimated conductivity for the full dataset (left) and the steady-state dataset (right), with the temperature coverage of the data below. The steady-state data support a simpler model.</figcaption>
       </figure>
 
       <figure class="fig" hidden>
@@ -337,7 +337,7 @@ sub, sup { line-height: 0; }
 
       <figure class="fig" hidden>
         <!-- FIGURE SLOT: images/p3-adaptive-mesh.png. Thesis Figure 5.3 (uniform vs adaptive mesh refinement). -->
-        <img src="images/p3-adaptive-mesh.png" alt="Comparison of uniform and goal-oriented adaptive mesh refinement around an inclusion and four sensors.">
+        <img style="--w: 460px" src="images/p3-adaptive-mesh.png" alt="Comparison of uniform and goal-oriented adaptive mesh refinement around an inclusion and four sensors.">
         <div class="slot">Add images/p3-adaptive-mesh.png (thesis Figure 5.3)</div>
         <figcaption>Uniform refinement (left) against goal-oriented adaptive refinement (right) with about the same number of elements. The adaptive mesh concentrates near the inclusion and the sensors.</figcaption>
       </figure>
@@ -354,9 +354,9 @@ sub, sup { line-height: 0; }
 
       <figure class="fig" hidden>
         <!-- FIGURE SLOT: images/p3-surrogate-accuracy.png. Thesis Figure 5.7 (relative prediction error vs number of training data). -->
-        <img src="images/p3-surrogate-accuracy.png" alt="Relative prediction error of the Gaussian process surrogates for different numbers of training samples.">
+        <img src="images/p3-surrogate-accuracy.png" alt="Relative prediction error of the surrogates for different numbers of training samples, for independent Gaussian processes and for multi-output models with 1 to 4 latent functions.">
         <div class="slot">Add images/p3-surrogate-accuracy.png (thesis Figure 5.7)</div>
-        <figcaption>Surrogate accuracy improves with more training data, with diminishing returns.</figcaption>
+        <figcaption>Relative prediction error against the number of training points, for independent Gaussian processes and for multi-output models with 1 to 4 latent functions. The best models reach about 0.01% error and gain little beyond 64 points.</figcaption>
       </figure>
 
       <figure class="fig" hidden>
@@ -394,7 +394,7 @@ sub, sup { line-height: 0; }
 
       <figure class="fig" hidden>
         <!-- FIGURE SLOT: images/p4-geometry.png. MSc paper Figure 1 (domains with water, skin, fat, muscle and the three tumors). -->
-        <img src="images/p4-geometry.png" alt="Layered domains of water, skin, fat and muscle with three rectangular tumor shapes.">
+        <img style="--w: 540px" src="images/p4-geometry.png" alt="Layered domains of water, skin, fat and muscle with three rectangular tumor shapes.">
         <div class="slot">Add images/p4-geometry.png (MSc paper Figure 1)</div>
         <figcaption>The three test cases: layers of water, skin, fat and muscle, with tumors of 1×5 mm, 3×5 mm and 5×1 mm.</figcaption>
       </figure>
