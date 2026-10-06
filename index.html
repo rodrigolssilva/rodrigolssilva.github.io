@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rodrigo Silva | Bayesian calibration and uncertainty quantification for physics-based models</title>
+<meta name="description" content="Portfolio of Rodrigo Silva: Bayesian calibration, uncertainty quantification and efficient simulation of physical systems. Four projects from MSc and PhD research.">
+<style>
+:root {
+  --bg: #F4F6F8;
+  --surface: #FFFFFF;
+  --ink: #16212C;
+  --muted: #56636F;
+  --rule: #D5DCE3;
+  --accent: #1B5E8F;
+  --accent-soft: rgba(27, 94, 143, 0.16);
+  --panel: #E9EEF3;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0F1A24;
+    --surface: #15232F;
+    --ink: #E6ECF1;
+    --muted: #9AA8B5;
+    --rule: #263746;
+    --accent: #6FB1E0;
+    --accent-soft: rgba(111, 177, 224, 0.2);
+    --panel: #1A2B39;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+p { margin: 0 0 1em; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+.hero { padding: 72px 0 56px; }
+.hero-inner { display: flex; flex-wrap: wrap; gap: 40px 56px; align-items: center; }
+.hero-text { flex: 1 1 400px; min-width: 0; }
+.hero h1 {
+  margin: 0 0 20px;
+  font-size: clamp(2.5rem, 6.5vw, 3.9rem);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.lede { font-size: 1.4rem; line-height: 1.4; margin-bottom: 1.1em; }
+.intro { color: var(--muted); max-width: 52ch; }
+.contact { font-family: var(--sans); font-size: 0.95rem; margin: 1.6em 0 0; }
+.contact a { margin-right: 1.4em; }
+.hero-figure { flex: 1 1 340px; margin: 0; min-width: 0; }
+.hero-figure svg { width: 100%; height: auto; display: block; }
+.hero-figure figcaption { font-family: var(--sans); font-size: 0.8rem; color: var(--muted); margin-top: 8px; }
+.hero-figure .axis { stroke: var(--muted); stroke-width: 1; fill: none; }
+.hero-figure .band { fill: var(--accent-soft); }
+.hero-figure .line { stroke: var(--accent); stroke-width: 2.6; fill: none; stroke-linecap: round; }
+.hero-figure .dot { fill: var(--ink); opacity: 0.72; }
+.hero-figure text { fill: var(--muted); font-family: var(--sans); font-size: 11px; }
+
+/* At a glance */
+.glance { border-top: 1px solid var(--rule); padding: 40px 0 8px; }
+.glance h2 { margin: 0 0 12px; font-size: 1.15rem; font-weight: 600; }
+.glance ul { list-style: none; margin: 0; padding: 0; }
+.glance li { display: flex; flex-wrap: wrap; gap: 2px 32px; padding: 14px 0; border-top: 1px solid var(--rule); }
+.glance li:first-child { border-top: 0; }
+.glance .g-title { flex: 0 1 330px; font-weight: 600; }
+.glance .g-note { flex: 1 1 320px; color: var(--muted); }
+
+/* Projects */
+.project { display: flex; flex-wrap: wrap; gap: 28px 56px; padding: 56px 0; border-top: 1px solid var(--rule); }
+.project:first-of-type { margin-top: 32px; }
+.project-head { flex: 0 0 290px; max-width: 100%; align-self: flex-start; }
+.project-body { flex: 1 1 440px; min-width: 0; max-width: 680px; }
+@media (min-width: 960px) { .project-head { position: sticky; top: 28px; } }
+.project h2 { margin: 0 0 12px; font-size: 1.55rem; line-height: 1.2; font-weight: 600; letter-spacing: -0.005em; }
+.status { font-family: var(--sans); font-size: 0.85rem; line-height: 1.45; color: var(--muted); margin-bottom: 1.2em; }
+.result { font-size: 1rem; line-height: 1.5; padding-top: 14px; border-top: 1px solid var(--rule); }
+.result b { color: var(--accent); }
+.sources { font-family: var(--sans); font-size: 0.85rem; line-height: 1.5; list-style: none; margin: 0; padding: 0; }
+.sources li { margin-bottom: 6px; }
+
+.project h3 { font-family: var(--sans); font-size: 0.95rem; font-weight: 700; margin: 1.8em 0 0.4em; }
+.project h3:first-child { margin-top: 0; }
+.project ul.points { margin: 0 0 1em; padding-left: 1.2em; }
+.project ul.points li { margin-bottom: 0.5em; }
+.project ul.points li::marker { color: var(--accent); }
+
+.formula {
+  margin: 1.2em 0;
+  padding: 14px 18px;
+  background: var(--panel);
+  border-left: 3px solid var(--accent);
+  font-size: 1.08rem;
+  line-height: 1.9;
+  overflow-x: auto;
+}
+.formula .eq { white-space: nowrap; }
+.formula .note { display: block; margin-top: 8px; font-family: var(--sans); font-size: 0.82rem; line-height: 1.5; color: var(--muted); white-space: normal; }
+var { font-style: italic; }
+sub, sup { line-height: 0; }
+
+/* Figures: hidden until the image file exists. Add ?draft to the URL to see empty slots. */
+.fig { margin: 1.6em 0; }
+.fig[hidden] { display: none; }
+.fig img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--rule); }
+.fig figcaption { font-family: var(--sans); font-size: 0.82rem; line-height: 1.5; color: var(--muted); margin-top: 8px; }
+.fig .slot { display: none; }
+.fig.missing img { display: none; }
+.fig.missing .slot {
+  display: block;
+  padding: 36px 20px;
+  border: 2px dashed var(--accent);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--panel);
+}
+
+.footer { border-top: 1px solid var(--rule); padding: 32px 0 56px; font-family: var(--sans); font-size: 0.85rem; color: var(--muted); }
+.footer p { margin: 0 0 0.4em; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <h1>Rodrigo Silva</h1>
+      <p class="lede">I build computational models of physical systems, calibrate them against real measurements, and quantify how far their predictions can be trusted.</p>
+      <p class="intro">PhD candidate at Eindhoven University of Technology, with the defense scheduled for December 2026. This page shows four projects from my MSc and PhD. I am looking for industry roles where models built on uncertain, real-world data drive real decisions.</p>
+      <p class="contact">
+        <a href="https://www.linkedin.com/in/rodrigosilva0494/">LinkedIn</a>
+        <a href="mailto:rodrigo.silva0494@gmail.com">rodrigo.silva0494@gmail.com</a>
+      </p>
+    </div>
+    <figure class="hero-figure">
+      <svg viewBox="0 0 480 300" role="img" aria-labelledby="hero-svg-title">
+  <title id="hero-svg-title">Noisy measurements, a model prediction rising toward a plateau, and a shaded credible interval that narrows as the data become informative.</title>
+  <path class="axis" d="M52,26 L52,250 L464,250"/>
+  <text x="52" y="18">temperature</text>
+  <text x="464" y="268" text-anchor="end">time</text>
+  <path class="band" d="M52.0,221.0 L57.9,212.5 L63.8,204.4 L69.7,196.8 L75.5,189.5 L81.4,182.5 L87.3,175.9 L93.2,169.7 L99.1,163.7 L105.0,158.0 L110.9,152.7 L116.7,147.5 L122.6,142.7 L128.5,138.0 L134.4,133.6 L140.3,129.5 L146.2,125.5 L152.1,121.7 L157.9,118.1 L163.8,114.7 L169.7,111.5 L175.6,108.4 L181.5,105.5 L187.4,102.7 L193.3,100.0 L199.1,97.5 L205.0,95.1 L210.9,92.8 L216.8,90.7 L222.7,88.6 L228.6,86.7 L234.5,84.8 L240.3,83.0 L246.2,81.4 L252.1,79.8 L258.0,78.2 L263.9,76.8 L269.8,75.4 L275.7,74.1 L281.5,72.8 L287.4,71.6 L293.3,70.5 L299.2,69.4 L305.1,68.4 L311.0,67.4 L316.9,66.4 L322.7,65.5 L328.6,64.7 L334.5,63.8 L340.4,63.1 L346.3,62.3 L352.2,61.6 L358.1,60.9 L363.9,60.2 L369.8,59.6 L375.7,59.0 L381.6,58.4 L387.5,57.8 L393.4,57.3 L399.3,56.8 L405.1,56.3 L411.0,55.8 L416.9,55.3 L422.8,54.9 L428.7,54.4 L434.6,54.0 L440.5,53.6 L446.3,53.2 L452.2,52.8 L458.1,52.5 L464.0,52.1 L464.0,62.1 L458.1,62.5 L452.2,62.9 L446.3,63.2 L440.5,63.7 L434.6,64.1 L428.7,64.6 L422.8,65.1 L416.9,65.6 L411.0,66.1 L405.1,66.7 L399.3,67.3 L393.4,68.0 L387.5,68.7 L381.6,69.4 L375.7,70.2 L369.8,71.0 L363.9,71.8 L358.1,72.7 L352.2,73.7 L346.3,74.7 L340.4,75.7 L334.5,76.8 L328.6,78.0 L322.7,79.2 L316.9,80.5 L311.0,81.8 L305.1,83.2 L299.2,84.7 L293.3,86.3 L287.4,87.9 L281.5,89.6 L275.7,91.4 L269.8,93.3 L263.9,95.3 L258.0,97.3 L252.1,99.5 L246.2,101.7 L240.3,104.1 L234.5,106.6 L228.6,109.2 L222.7,111.9 L216.8,114.8 L210.9,117.7 L205.0,120.9 L199.1,124.1 L193.3,127.5 L187.4,131.1 L181.5,134.9 L175.6,138.8 L169.7,142.9 L163.8,147.2 L157.9,151.6 L152.1,156.3 L146.2,161.2 L140.3,166.4 L134.4,171.7 L128.5,177.3 L122.6,183.2 L116.7,189.4 L110.9,195.8 L105.0,202.5 L99.1,209.6 L93.2,216.9 L87.3,224.7 L81.4,232.7 L75.5,241.2 L69.7,250.0 L63.8,250.0 L57.9,250.0 L52.0,250.0 Z"/>
+  <circle class="dot" cx="58.9" cy="246.5" r="2.7"/><circle class="dot" cx="72.6" cy="217.0" r="2.7"/><circle class="dot" cx="86.3" cy="195.5" r="2.7"/><circle class="dot" cx="100.1" cy="188.6" r="2.7"/><circle class="dot" cx="113.8" cy="179.3" r="2.7"/><circle class="dot" cx="127.5" cy="158.9" r="2.7"/><circle class="dot" cx="141.3" cy="144.3" r="2.7"/><circle class="dot" cx="155.0" cy="130.3" r="2.7"/><circle class="dot" cx="168.7" cy="135.1" r="2.7"/><circle class="dot" cx="182.5" cy="127.4" r="2.7"/><circle class="dot" cx="196.2" cy="108.0" r="2.7"/><circle class="dot" cx="209.9" cy="102.9" r="2.7"/><circle class="dot" cx="223.7" cy="90.7" r="2.7"/><circle class="dot" cx="237.4" cy="88.7" r="2.7"/><circle class="dot" cx="251.1" cy="90.5" r="2.7"/><circle class="dot" cx="264.9" cy="87.4" r="2.7"/><circle class="dot" cx="278.6" cy="66.6" r="2.7"/><circle class="dot" cx="292.3" cy="80.3" r="2.7"/><circle class="dot" cx="306.1" cy="80.3" r="2.7"/><circle class="dot" cx="319.8" cy="79.7" r="2.7"/><circle class="dot" cx="333.5" cy="69.9" r="2.7"/><circle class="dot" cx="347.3" cy="67.5" r="2.7"/><circle class="dot" cx="361.0" cy="68.5" r="2.7"/><circle class="dot" cx="374.7" cy="65.1" r="2.7"/><circle class="dot" cx="388.5" cy="61.5" r="2.7"/><circle class="dot" cx="402.2" cy="57.6" r="2.7"/><circle class="dot" cx="415.9" cy="53.9" r="2.7"/><circle class="dot" cx="429.7" cy="58.2" r="2.7"/><circle class="dot" cx="443.4" cy="69.2" r="2.7"/><circle class="dot" cx="457.1" cy="53.3" r="2.7"/>
+  <path class="line" d="M52.0,250.0 L57.9,240.7 L63.8,231.8 L69.7,223.4 L75.5,215.3 L81.4,207.6 L87.3,200.3 L93.2,193.3 L99.1,186.6 L105.0,180.3 L110.9,174.2 L116.7,168.5 L122.6,162.9 L128.5,157.7 L134.4,152.7 L140.3,147.9 L146.2,143.4 L152.1,139.0 L157.9,134.9 L163.8,130.9 L169.7,127.2 L175.6,123.6 L181.5,120.2 L187.4,116.9 L193.3,113.8 L199.1,110.8 L205.0,108.0 L210.9,105.3 L216.8,102.7 L222.7,100.3 L228.6,97.9 L234.5,95.7 L240.3,93.6 L246.2,91.5 L252.1,89.6 L258.0,87.8 L263.9,86.0 L269.8,84.3 L275.7,82.7 L281.5,81.2 L287.4,79.8 L293.3,78.4 L299.2,77.1 L305.1,75.8 L311.0,74.6 L316.9,73.5 L322.7,72.4 L328.6,71.3 L334.5,70.3 L340.4,69.4 L346.3,68.5 L352.2,67.6 L358.1,66.8 L363.9,66.0 L369.8,65.3 L375.7,64.6 L381.6,63.9 L387.5,63.3 L393.4,62.6 L399.3,62.0 L405.1,61.5 L411.0,61.0 L416.9,60.4 L422.8,60.0 L428.7,59.5 L434.6,59.1 L440.5,58.6 L446.3,58.2 L452.2,57.8 L458.1,57.5 L464.0,57.1"/>
+  <circle class="dot" cx="292" cy="190" r="2.7"/>
+  <text x="304" y="194">measurements</text>
+  <path class="line" d="M286,212 L298,212"/>
+  <text x="304" y="216">prediction</text>
+  <rect class="band" x="286" y="230" width="12" height="10"/>
+  <text x="304" y="239">credible interval</text>
+</svg>
+      <figcaption>Illustration: a model prediction with its credible interval, compared with noisy measurements.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <section class="glance" aria-labelledby="glance-title">
+    <h2 id="glance-title">The four projects</h2>
+    <ul>
+      <li>
+        <a class="g-title" href="#calibration">Bayesian calibration across thermal, viscoelastic and hysteretic models</a>
+        <span class="g-note">One framework, three experiments, and a clear picture of when calibration works and when the model itself is the problem.</span>
+      </li>
+      <li>
+        <a class="g-title" href="#discretization">Discretization-optimized calibration</a>
+        <span class="g-note">Refines the numerical model only as far as the measurement noise justifies: about 42 times less computation on real data.</span>
+      </li>
+      <li>
+        <a class="g-title" href="#surrogates">Goal-oriented adaptivity with surrogates</a>
+        <span class="g-note">Up to 150 times faster Bayesian calibration, with the surrogate's uncertainty carried into the result.</span>
+      </li>
+      <li>
+        <a class="g-title" href="#hifu">Bayesian design of tumor ablation with focused ultrasound</a>
+        <span class="g-note">Transducer position and heating times chosen under uncertain tissue properties.</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===================== PROJECT 1 ===================== -->
+  <article class="project" id="calibration">
+    <div class="project-head">
+      <h2>Bayesian calibration across thermal, viscoelastic and hysteretic models</h2>
+      <p class="status">PhD, Chapters 2 and 3. Chapter 3 is published in the International Journal for Uncertainty Quantification (2026). Chapter 2 is part of the DAMOCLES project at EAISI, TU/e.</p>
+      <p class="result"><b>Key result.</b> Calibration worked for the thermal, viscoelastic and Jiles–Atherton models, and exposed the Bouc–Wen model as unable to describe the material.</p>
+      <ul class="sources">
+        <li><a href="https://doi.org/10.1615/Int.J.UncertaintyQuantification.2026060967">Sampler comparison, Int. J. Uncertainty Quantification (2026)</a></li>
+        <li><a href="https://doi.org/10.3390/psf2025012004">Related conference paper on the squeeze flow problem, Physical Sciences Forum (2025)</a></li>
+      </ul>
+    </div>
+    <div class="project-body">
+      <h3>Problem</h3>
+      <p>Engineering simulations combine conservation laws, which are reliable, with constitutive equations, which describe how a material responds and are much less certain. Their parameters come from laboratory measurements that are noisy and limited. The question here: how well does Bayesian calibration work across very different kinds of material behavior, and what limits it?</p>
+
+      <h3>Approach</h3>
+      <p>I applied one Bayesian pipeline to three experiments: heat conduction in a paraffin wax column, large amplitude oscillatory shear of a shampoo in a rheometer (a nonlinear viscoelastic fluid, Giesekus model), and magnetic hysteresis measured with an Epstein frame (Jiles–Atherton and Bouc–Wen models). Priors come from the literature and preliminary estimates, the likelihood from the measurement error, and the posterior is explored with adaptive Metropolis–Hastings MCMC. Each calibrated model is then tested on independent data: a different source temperature, excitation frequency or field amplitude. I ran all the Bayesian analyses, and the heat conduction rig was my own design.</p>
+      <div class="formula">
+        <span class="eq"><var>p</var>(<var>θ</var> | <var>d</var>) ∝ <var>p</var>(<var>d</var> | <var>θ</var>) <var>p</var>(<var>θ</var>), &nbsp; with &nbsp; <var>d</var> = <var>f</var>(<var>θ</var>) + <var>ε</var></span>
+        <span class="note">Measurements <var>d</var> update the parameters <var>θ</var> of the physics model <var>f</var>, given measurement error <var>ε</var>. The answer is a distribution, not a single value.</span>
+      </div>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p1-thermal-validation.png. Thesis Figure 2.5, both panels (a) and (b). -->
+        <img src="images/p1-thermal-validation.png" alt="Measured and estimated temperatures for the calibration run and an independent validation run of the heat conduction experiment.">
+        <div class="slot">Add images/p1-thermal-validation.png (thesis Figure 2.5, panels a and b)</div>
+        <figcaption>Heat conduction: measured and estimated temperatures for the calibration run (left) and an independent validation run with a different source temperature (right).</figcaption>
+      </figure>
+
+      <h3>Results</h3>
+      <ul class="points">
+        <li><b>Heat conduction.</b> Predictions stayed within about 0.23 °C RMSD of the calibration data, with good agreement on the independent run.</li>
+        <li><b>Viscoelastic shampoo.</b> The stress response was reproduced closely on the calibration data (0.5 Hz). On the validation data (1 Hz) the error grew to a few Pa, but the main features of the response were still reproduced.</li>
+        <li><b>Magnetic hysteresis.</b> The Jiles–Atherton model reproduced the loops on calibration and validation data. The Bouc–Wen model did not, even after calibration.</li>
+      </ul>
+      <p>The last result is the most useful one. When the model cannot describe the physics, calibration cannot rescue it, and the uncertainty bounds only describe a model that is wrong. Calibration makes this visible instead of hiding it.</p>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p1-hysteresis-models.png. Thesis Figure 2.7a (Bouc-Wen) on the left and Figure 2.8a (Jiles-Atherton) on the right, placed side by side in one image. -->
+        <img src="images/p1-hysteresis-models.png" alt="Measured and simulated magnetic hysteresis loops for the Bouc–Wen model and the Jiles–Atherton model after Bayesian calibration.">
+        <div class="slot">Add images/p1-hysteresis-models.png (thesis Figure 2.7a next to Figure 2.8a)</div>
+        <figcaption>Magnetic hysteresis, same data and same calibration procedure. The Bouc–Wen model (left) cannot follow the measured loop. The Jiles–Atherton model (right) can.</figcaption>
+      </figure>
+
+      <h3>Choosing the sampler</h3>
+      <p>A related question is which MCMC algorithm to use. With colleagues (Rinkens, Silva et al.), I compared Metropolis–Hastings, the Affine Invariant Stretch Move and the No-U-Turn Sampler (NUTS) on two real experiments: the thermal conduction problem with a finite element model, and a Newtonian squeeze flow with a semi-analytical model. This comparison did not include the viscoelastic or hysteresis problems. Convergence was measured as the KL divergence to a reference posterior, next to the usual Gelman–Rubin and effective sample size diagnostics. My part was the heat conduction setting and the analysis of the Metropolis–Hastings and NUTS samplers. NUTS and the Stretch Move sampler used existing Julia packages.</p>
+      <ul class="points">
+        <li>At a fixed number of samples, NUTS converged best.</li>
+        <li>Per model evaluation, NUTS lost to the other two, because each step needs many evaluations including gradients. For the finite element thermal model it gave no advantage per independent sample.</li>
+        <li>The default Stretch Move setup suits a broad range of problems, while Metropolis–Hastings needs proposal tuning that can cost as much as the sampling itself.</li>
+        <li>The standard diagnostics tracked the KL divergence qualitatively, but not in a clear quantitative way.</li>
+      </ul>
+      <p>The right sampler depends on how expensive the model is and whether gradients are available.</p>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p1-sampler-kl.png. Thesis Figure 3.10 (KL divergence and coverage, thermal problem). -->
+        <img src="images/p1-sampler-kl.png" alt="KL divergence and coverage of the sampled posterior for three MCMC samplers on the thermal conduction problem.">
+        <div class="slot">Add images/p1-sampler-kl.png (thesis Figure 3.10)</div>
+        <figcaption>KL divergence and coverage of the sampled posterior for the three samplers on the thermal problem.</figcaption>
+      </figure>
+
+      <h3>Limits</h3>
+      <p>The thermal case is the easy one: a linear model with informative transient data, so its good results should not be read as typical. The conclusions are drawn from these specific systems, not from a general proof.</p>
+    </div>
+  </article>
+
+  <!-- ===================== PROJECT 2 ===================== -->
+  <article class="project" id="discretization">
+    <div class="project-head">
+      <h2>Discretization-optimized calibration</h2>
+      <p class="status">PhD, Chapter 4. First author. Preprint on arXiv, under review.</p>
+      <p class="result"><b>Key result.</b> About 42 times less computation than a fixed fine reference on the full real dataset, and about 30,500 times less on steady-state data.</p>
+      <ul class="sources">
+        <li><a href="https://arxiv.org/abs/2604.01101">arXiv:2604.01101</a></li>
+      </ul>
+    </div>
+    <div class="project-body">
+      <h3>Problem</h3>
+      <p>The thermal conductivity of paraffin wax depends on temperature, so the unknown is a curve <var>k</var>(<var>T</var>), not a single number. Estimating it from noisy sensor data needs a numerical model, and that model comes with choices: how fine the mesh and time steps are, and how many segments describe the curve. Too coarse and the estimate is biased. Too fine and the calibration takes needlessly long.</p>
+
+      <h3>Approach</h3>
+      <p>I developed an algorithm that makes these choices from the data itself. In an inner loop it refines the mesh and time step, guided by gradient-based optimization, and stops when the numerical error is no longer larger than the measurement noise (Morozov's discrepancy principle). In an outer loop it adds segments to the conductivity curve only while the information criteria (BIC and DIC) say the extra complexity is justified. MCMC then gives the uncertainty of the final curve, reported as 99% credible intervals.</p>
+      <div class="formula">
+        <span class="eq"><var>ρc<sub>p</sub></var> ∂<var>T</var>/∂<var>t</var> = ∂/∂<var>x</var> ( <var>k</var>(<var>T</var>) ∂<var>T</var>/∂<var>x</var> ) + (2<var>h</var><sub>side</sub> / <var>R</var>) (<var>T</var><sub>∞</sub> − <var>T</var>)</span><br>
+        <span class="eq"><var>d</var> = <var>f</var> + <var>ε</var><sub>pred</sub> + <var>ε</var><sub>meas</sub></span>
+        <span class="note">The unknown is the curve <var>k</var>(<var>T</var>). The numerical error <var>ε</var><sub>pred</sub> is kept small relative to the measurement noise <var>ε</var><sub>meas</sub>, and no smaller than that requires.</span>
+      </div>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p2-rig.png. Thesis Figure 4.1a (experimental heat conduction setup). -->
+        <img src="images/p2-rig.png" alt="Experimental rig: a paraffin wax column in a 3D-printed housing, heated from below, with temperature sensors along its axis.">
+        <div class="slot">Add images/p2-rig.png (thesis Figure 4.1a)</div>
+        <figcaption>The experimental rig: a paraffin wax column in a 3D-printed housing, heated from below, with four temperature sensors along its axis and one for the ambient temperature.</figcaption>
+      </figure>
+
+      <h3>Results</h3>
+      <ul class="points">
+        <li><b>Synthetic data.</b> Checked against a very fine reference solution (128 elements, 4096 time steps): the relative difference in predicted temperatures was about 0.01%, and the largest deviation was 0.19 °C.</li>
+        <li><b>Real rig data, full dataset.</b> A 14 hour experiment with four sensors. With transient and steady-state data the algorithm chose 24 elements, 512 time steps and 8 curve segments, using about 42 times less computation than the fixed fine reference.</li>
+        <li><b>Real rig data, steady state only.</b> It chose 8 elements, 2 time steps and 2 segments, about 30,500 times less computation, and the predictions still agreed with the measurements.</li>
+        <li>Computation is counted in solver work units, which tracked CPU time.</li>
+      </ul>
+      <p>The algorithm adapts to how informative the data are, instead of applying one fixed resolution to every dataset.</p>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p2-conductivity.png. Thesis Figure 4.16, panels (a) full regime and (b) steady state. -->
+        <img src="images/p2-conductivity.png" alt="Estimated temperature-dependent conductivity for the full dataset and for the steady-state dataset.">
+        <div class="slot">Add images/p2-conductivity.png (thesis Figure 4.16, panels a and b)</div>
+        <figcaption>Estimated conductivity for the full dataset (left) and the steady-state dataset (right). The steady-state data support a simpler model.</figcaption>
+      </figure>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p2-posterior-predictive.png. Thesis Figure 4.17 (measurements vs posterior predictive distributions). -->
+        <img src="images/p2-posterior-predictive.png" alt="Measured temperatures compared with posterior predictive means and 99% credible intervals at the sensor locations.">
+        <div class="slot">Add images/p2-posterior-predictive.png (thesis Figure 4.17)</div>
+        <figcaption>Measured temperatures against the posterior predictive mean and 99% credible intervals at the sensor locations.</figcaption>
+      </figure>
+
+      <h3>Limits</h3>
+      <p>The real-data run illustrates the algorithm: the other physical properties were calibrated beforehand and held fixed. The method is tied to quantities that relate closely to the likelihood, here the sensor temperatures, and it was shown on a low-dimensional one-dimensional problem. Larger problems would raise the cost, which is where surrogate models come in.</p>
+    </div>
+  </article>
+
+  <!-- ===================== PROJECT 3 ===================== -->
+  <article class="project" id="surrogates">
+    <div class="project-head">
+      <h2>Goal-oriented adaptivity with surrogates</h2>
+      <p class="status">PhD, Chapter 5. Not yet published.</p>
+      <p class="result"><b>Key result.</b> About 150 times faster on a problem with 2 unknowns, and about 8 times faster on a harder problem with 4 unknowns, both including the cost of building the surrogate.</p>
+    </div>
+    <div class="project-body">
+      <h3>Problem</h3>
+      <p>MCMC needs the forward model thousands of times, and each finite element solve is expensive. But only the sensor readings enter the likelihood. If those readings are accurate, the rest of the solution does not need to be.</p>
+
+      <h3>Approach</h3>
+      <p>I combined two ideas. Offline, goal-oriented adaptive finite elements estimate the error in the sensor readings and refine the mesh only where it matters: near steep gradients and near the sensors. This produces training data cheaply. Online, Gaussian process surrogates of the sensor readings replace the finite element solves inside MCMC. The uncertainty from the discretization and from the surrogate is added to the likelihood, so a less trustworthy surrogate widens the posterior instead of silently biasing it. The test problem is a block of material with a hidden inclusion, whose position, size and orientation are inferred from four temperature sensors.</p>
+      <div class="formula">
+        <span class="eq"><b>Σ</b> = <b>Σ</b><sub>noise</sub> + <b>Σ</b><sub>surrogate</sub></span>
+        <span class="note">In the likelihood, the surrogate's own uncertainty adds to the measurement noise.</span>
+      </div>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p3-adaptive-mesh.png. Thesis Figure 5.3 (uniform vs adaptive mesh refinement). -->
+        <img src="images/p3-adaptive-mesh.png" alt="Comparison of uniform and goal-oriented adaptive mesh refinement around an inclusion and four sensors.">
+        <div class="slot">Add images/p3-adaptive-mesh.png (thesis Figure 5.3)</div>
+        <figcaption>Uniform refinement (left) against goal-oriented adaptive refinement (right) with about the same number of elements. The adaptive mesh concentrates near the inclusion and the sensors.</figcaption>
+      </figure>
+
+      <h3>Results</h3>
+      <ul class="points">
+        <li>For the same number of unknowns, adaptive refinement reached smaller errors than uniform refinement, at the optimal convergence rate.</li>
+        <li><b>Circular inclusion (2 unknowns).</b> About 150 times faster than finite element MCMC: about 20 s against about 3,100 s for 10,000 samples, including the cost of generating the training data.</li>
+        <li><b>Elliptical inclusion (4 unknowns).</b> About 8 times faster, including the full offline cost. This is a conservative estimate because the finite element model here is cheap. Larger gains are expected for more expensive models.</li>
+        <li>Position and size were recovered, with the true values inside the 95% credible intervals. The orientation is hard to determine from four sensors, and the posterior said so with a wide interval.</li>
+        <li>More training data and finer meshes improved the surrogate, with diminishing returns. Multi-output Gaussian processes gave only modest gains over independent ones.</li>
+      </ul>
+      <p>There are two speedups here, not one: 150 times when the problem is small, 8 times when it is harder.</p>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p3-surrogate-accuracy.png. Thesis Figure 5.7 (relative prediction error vs number of training data). -->
+        <img src="images/p3-surrogate-accuracy.png" alt="Relative prediction error of the Gaussian process surrogates for different numbers of training samples.">
+        <div class="slot">Add images/p3-surrogate-accuracy.png (thesis Figure 5.7)</div>
+        <figcaption>Surrogate accuracy improves with more training data, with diminishing returns.</figcaption>
+      </figure>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p3-markov-chains.png. Thesis Figure 5.8 (panels a and b: 4 vs 256 training points). -->
+        <img src="images/p3-markov-chains.png" alt="Markov chains for the inclusion position parameters obtained with 4 and with 256 training points.">
+        <div class="slot">Add images/p3-markov-chains.png (thesis Figure 5.8, panels a and b)</div>
+        <figcaption>Markov chains for the inclusion position with 4 training points (left) and 256 training points (right). With few training points the surrogate is uncertain, and the posterior is broader.</figcaption>
+      </figure>
+
+      <h3>Limits</h3>
+      <p>The benchmarks are two dimensional. The link between finite element error estimates and surrogate uncertainty is simplified. Gaussian process training sets grow quickly with the number of parameters, so larger problems would need sparse methods.</p>
+    </div>
+  </article>
+
+  <!-- ===================== PROJECT 4 ===================== -->
+  <article class="project" id="hifu">
+    <div class="project-head">
+      <h2>Bayesian design of tumor ablation with focused ultrasound</h2>
+      <p class="status">MSc research. First author. Published in Numerical Heat Transfer, Part B: Fundamentals (2024), with M. Alaeian and H. Orlande.</p>
+      <p class="result"><b>Key result.</b> For a 3×5 mm tumor, two heating sessions instead of one raised the damage probability above 94% across the whole tumor and reduced damage to healthy tissue.</p>
+      <ul class="sources">
+        <li><a href="https://doi.org/10.1080/10407790.2023.2228022">Numerical Heat Transfer, Part B (2024)</a></li>
+      </ul>
+    </div>
+    <div class="project-body">
+      <h3>Problem</h3>
+      <p>High intensity focused ultrasound (HIFU) can destroy a tumor without surgery by heating a small focal region. Treatment planning relies on simulation, but tissue properties are known only roughly. Which transducer position and heating times ablate the tumor reliably while sparing healthy tissue?</p>
+
+      <h3>Approach</h3>
+      <p>I chained three simulations: nonlinear ultrasound propagation (the k-Wave toolbox in MATLAB), heat conduction driven by the absorbed ultrasound, and Arrhenius thermal damage, which gives the probability that cells at each location are destroyed. The design problem is then posed as Bayesian inference. The transducer position and the heating time of each session are the unknowns, tissue properties carry Gaussian uncertainty, and the likelihood encodes the desired outcome: a damage probability near 100% in the tumor, an open margin around it, and low damage elsewhere (beta distributions). A two-block Metropolis–Hastings sampler optimizes the design variables while the tissue properties only contribute uncertainty.</p>
+      <div class="formula">
+        <span class="eq">Ω = ∫ <var>A</var> exp( −<var>E</var><sub>a</sub> / <var>RT</var>(<var>t′</var>) ) d<var>t′</var>, &nbsp; <var>Y</var> = 1 − e<sup>−Ω</sup></span>
+        <span class="note"><var>Y</var> is the probability that the cells at a location are thermally damaged. It is computed from the temperature history <var>T</var>.</span>
+      </div>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p4-geometry.png. MSc paper Figure 1 (domains with water, skin, fat, muscle and the three tumors). -->
+        <img src="images/p4-geometry.png" alt="Layered domains of water, skin, fat and muscle with three rectangular tumor shapes.">
+        <div class="slot">Add images/p4-geometry.png (MSc paper Figure 1)</div>
+        <figcaption>The three test cases: layers of water, skin, fat and muscle, with tumors of 1×5 mm, 3×5 mm and 5×1 mm.</figcaption>
+      </figure>
+
+      <h3>Results</h3>
+      <ul class="points">
+        <li><b>1×5 mm tumor, one session.</b> Heating of about 15 s with the transducer centered. The damage probability was above 94% in the tumor and below 52% in the healthy tissue region. The peak temperature was about 62 °C, which avoids boiling.</li>
+        <li><b>3×5 mm tumor.</b> One session left parts of the tumor under-treated while damaging healthy tissue above it. Two sessions raised the probability above 94% in the whole tumor and reduced the collateral damage.</li>
+        <li><b>5×1 mm tumor.</b> Four sessions (12 design variables), with the focus moving across the tumor. The tumor probability was above about 90%. Healthy tissue along the beam path still reached about 80% in places, so the shape and position of a tumor limit what a fixed transducer can do.</li>
+        <li>The design variables were estimated with small uncertainty (about 0.1 mm and 0.1 s in the single-session case). Uncertainty in the pressure, heat source, temperature and damage fields came as a by-product.</li>
+      </ul>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p4-damage-regions.png. MSc paper Figure 14 (mean damage probability in tumor, transition region and healthy tissue, case 1). -->
+        <img src="images/p4-damage-regions.png" alt="Mean probability of thermally damaged cells in the tumor, the transition region and the healthy tissue for the first test case.">
+        <div class="slot">Add images/p4-damage-regions.png (MSc paper Figure 14)</div>
+        <figcaption>Probability of thermal damage for the 1×5 mm tumor: inside the tumor (left), in the margin around it (middle) and in healthy tissue (right).</figcaption>
+      </figure>
+
+      <figure class="fig" hidden>
+        <!-- FIGURE SLOT: images/p4-four-sessions.png. MSc paper Figure 21 (damage probability with four heating sessions, case 3). -->
+        <img src="images/p4-four-sessions.png" alt="Mean and standard deviation of the probability of thermally damaged cells after four heating sessions.">
+        <div class="slot">Add images/p4-four-sessions.png (MSc paper Figure 21, panels a and b)</div>
+        <figcaption>Damage probability after four heating sessions for the 5×1 mm tumor: mean (left) and standard deviation (right).</figcaption>
+      </figure>
+
+      <h3>Limits</h3>
+      <p>The tumors are idealized two dimensional shapes, not patient data. One single-session design took about 90 hours on a workstation, so computational cost is the main obstacle to practical use.</p>
+    </div>
+  </article>
+
+</div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Rodrigo Silva, October 2026.</p>
+    <p><a href="https://www.linkedin.com/in/rodrigosilva0494/">LinkedIn</a> &nbsp; <a href="mailto:rodrigo.silva0494@gmail.com">rodrigo.silva0494@gmail.com</a></p>
+  </div>
+</footer>
+
+<script>
+// Figures stay hidden until their image file exists. Open the page with ?draft to see the empty slots.
+(function () {
+  var draft = /[?&]draft\b/.test(window.location.search);
+  var figs = document.querySelectorAll('figure.fig');
+  Array.prototype.forEach.call(figs, function (fig) {
+    var img = fig.querySelector('img');
+    if (!img) { return; }
+    function show() { fig.hidden = false; fig.classList.remove('missing'); }
+    function missing() { if (draft) { fig.hidden = false; fig.classList.add('missing'); } }
+    if (img.complete) {
+      if (img.naturalWidth > 0) { show(); } else { missing(); }
+    } else {
+      img.addEventListener('load', show);
+      img.addEventListener('error', missing);
+    }
+  });
+})();
+</script>
+</body>
+</html>
